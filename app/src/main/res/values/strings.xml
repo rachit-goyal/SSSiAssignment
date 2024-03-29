@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SSSiAssignment</string>
+    <string name="no_data_found">No Data Found</string>
+    <string name="no_internet_available">No Internet Available</string>
+    <string name="teachers">Teachers</string>
+    <string name="favourite">Favourite</string>
+</resources>

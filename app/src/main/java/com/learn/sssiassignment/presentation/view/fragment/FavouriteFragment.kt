@@ -40,17 +40,21 @@ class FavouriteFragment : Fragment() {
 
         viewModel.localData.observe(viewLifecycleOwner) {
             it?.let {
-                binding.recycler.visibility = View.VISIBLE
-                binding.recycler.apply {
-                    layoutManager = LinearLayoutManager(context);
+                if(it.isNotEmpty()) {
+                    binding.tv.visibility = View.GONE
+                    binding.recycler.visibility = View.VISIBLE
+                    binding.recycler.apply {
+                        layoutManager = LinearLayoutManager(context);
 
-                    this.layoutManager = layoutManager
-                    rvLocalAdapter = RvLocalAdapter(it)
-                    this.adapter = rvLocalAdapter
+                        this.layoutManager = layoutManager
+                        rvLocalAdapter = RvLocalAdapter(it)
+                        this.adapter = rvLocalAdapter
+                    }
                 }
-            } ?: run {
-                binding.recycler.visibility = View.GONE
-                binding.tv.visibility = View.VISIBLE
+                else {
+                    binding.recycler.visibility = View.GONE
+                    binding.tv.visibility = View.VISIBLE
+                }
             }
 
 

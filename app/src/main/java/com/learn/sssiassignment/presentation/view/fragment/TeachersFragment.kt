@@ -79,7 +79,7 @@ class TeachersFragment : Fragment() {
             }
 
         }
-        viewModel.data.observe(viewLifecycleOwner) { it ->
+        viewModel.data.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Error -> {
                     binding.progress.visibility = View.GONE

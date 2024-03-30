@@ -15,6 +15,6 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(userLocalModel: UserLocalModel)
 
-    @Query("select * from userdata order by id desc ")
+    @Query("select * from userdata order by Uid desc ")
     fun getAllUsers(): Flow<List<UserLocalModel>>
 }

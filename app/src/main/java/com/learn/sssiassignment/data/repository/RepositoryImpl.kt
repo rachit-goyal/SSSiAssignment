@@ -33,4 +33,10 @@ class RepositoryImpl @Inject constructor(
     override  fun getUsers(): Flow<List<UserLocalModel>> {
        return userDao.getAllUsers()
     }
+
+    override suspend fun deleteUser(id: Int) {
+        userDao.delete(id)
+    }
+
+
 }

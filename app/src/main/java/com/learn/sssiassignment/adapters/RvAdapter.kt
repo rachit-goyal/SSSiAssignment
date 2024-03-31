@@ -41,6 +41,7 @@ class RvAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(userData[position]) {
+                binding.del.visibility=View.GONE
                 binding.name.text = this.name
                 binding.coins.text = this.coins
                 binding.language.text = this.languageName
@@ -52,11 +53,7 @@ class RvAdapter(
                         .into(binding.img)
                 }
 
-                if(itemsIds.contains(this.id)){
-                    binding.fav.visibility=View.GONE
-                }
                 binding.fav.setOnClickListener {
-                    binding.fav.visibility=View.GONE
                     onItemClicked(userData[position])
                 }
             }

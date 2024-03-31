@@ -10,10 +10,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import com.learn.sssiassignment.R
 import com.learn.sssiassignment.adapters.RvAdapter
+import com.learn.sssiassignment.data.local.UserLocalModel
 import com.learn.sssiassignment.data.remote.models.UserDataX
 import com.learn.sssiassignment.databinding.LayoutTeachersBinding
-import com.learn.sssiassignment.data.local.UserLocalModel
 import com.learn.sssiassignment.presentation.viewModel.UserDataViewModel
 import com.learn.sssiassignment.utils.Connectivity
 import com.learn.sssiassignment.utils.Resource
@@ -54,6 +56,7 @@ class TeachersFragment : Fragment() {
             val isInternetAvailable = Connectivity.isOnline(requireContext())
             if (isInternetAvailable) {
                 binding.tv.visibility = View.GONE
+                viewModel.getUserData()
                 viewModel.getLocalData()
                 initObserver()
             } else {
@@ -73,12 +76,7 @@ class TeachersFragment : Fragment() {
         if (!isAdded) {
             return
         }
-        viewModel.localData.observe(viewLifecycleOwner) {
-            it.forEach {
-                itemsId.add(it.id)
-            }
 
-        }
         viewModel.data.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Error -> {
@@ -104,10 +102,26 @@ class TeachersFragment : Fragment() {
                             items = it.data.userData.take(5).toMutableList()
                             rvAdapter = RvAdapter(items, itemsId) { userClicked ->
                                 lifecycleScope.launch {
+                                    viewModel.localData.observe(viewLifecycleOwner) {
+                                        itemsId.clear()
+                                        it.forEach {
+                                            itemsId.add(it.id)
+                                        }
 
+                                    }
                                     if (!itemsId.contains(userClicked.id)) {
                                         saveImageToDatabase(userClicked)
+                                        Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                            context.getString(
+                                                R.string.saved_to_favorite_list
+                                            ), Snackbar.LENGTH_SHORT).show()
 
+                                    }
+                                    else{
+                                        Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                            context.getString(
+                                                R.string.already_added
+                                            ), Snackbar.LENGTH_SHORT).show()
                                     }
 
 
@@ -137,6 +151,8 @@ class TeachersFragment : Fragment() {
             }
         }
     }
+
+
 
     private suspend fun saveImageToDatabase(userDataX: UserDataX) {
         val imageData: ByteArray? = if (userDataX.profilePic != null) {

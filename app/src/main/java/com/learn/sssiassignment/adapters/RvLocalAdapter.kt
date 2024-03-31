@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.sssiassignment.databinding.SingleItemBinding
 import com.learn.sssiassignment.data.local.UserLocalModel
+import com.learn.sssiassignment.data.remote.models.UserDataX
 
 /**
 created by Rachit on 3/28/2024.
  */
 class RvLocalAdapter(
     private var userData: List<UserLocalModel>,
+    private var onItemClicked: ((id: Int) -> Unit),
 
     ) : RecyclerView.Adapter<RvLocalAdapter.ViewHolder>() {
 
@@ -38,6 +40,8 @@ class RvLocalAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(userData[position]) {
+                binding.fav.visibility=View.GONE
+
                 binding.name.text = this.name
                 binding.coins.text = this.coins
                 binding.language.text = this.languageName
@@ -46,8 +50,9 @@ class RvLocalAdapter(
                         BitmapFactory.decodeByteArray(this.profilePic, 0, this.profilePic.size)
                     )
                 }
-
-                binding.fav.visibility = View.GONE
+                binding.del.setOnClickListener {
+                    onItemClicked(userData[position].uId!!)
+                }
             }
         }
     }

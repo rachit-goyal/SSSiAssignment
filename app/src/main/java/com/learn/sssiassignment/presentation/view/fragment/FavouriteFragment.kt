@@ -47,7 +47,9 @@ class FavouriteFragment : Fragment() {
                         layoutManager = LinearLayoutManager(context);
 
                         this.layoutManager = layoutManager
-                        rvLocalAdapter = RvLocalAdapter(it)
+                        rvLocalAdapter = RvLocalAdapter(it){uId->
+                          viewModel.deleteData(uId)
+                        }
                         this.adapter = rvLocalAdapter
                     }
                 }

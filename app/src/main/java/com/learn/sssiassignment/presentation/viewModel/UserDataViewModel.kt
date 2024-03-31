@@ -24,7 +24,7 @@ class UserDataViewModel @Inject constructor(private val repositoryInterface: Rep
     private var _localData = MutableLiveData<List<UserLocalModel>>()
     val localData: LiveData<List<UserLocalModel>> = _localData
 
-    init {
+    fun getUserData(){
         viewModelScope.launch {
             when (val result = repositoryInterface.getData()) {
                 is Resource.Error -> {
@@ -62,6 +62,15 @@ class UserDataViewModel @Inject constructor(private val repositoryInterface: Rep
 
         }
 
+    }
+
+
+    fun deleteData(id:Int){
+        viewModelScope.launch {
+             repositoryInterface.deleteUser(id)
+
+
+        }
     }
 }
 

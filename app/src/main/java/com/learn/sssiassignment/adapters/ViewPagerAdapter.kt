@@ -9,7 +9,7 @@ created by Rachit on 3/27/2024.
  */
 class ViewPagerAdapter// this is a secondary constructor of ViewPagerAdapter class.
     (supportFragmentManager: FragmentManager) :
-    FragmentPagerAdapter(supportFragmentManager) {
+    FragmentPagerAdapter(supportFragmentManager,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     // objects of arraylist. One is of Fragment type and
     // another one is of String type.*/

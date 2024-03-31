@@ -4,4 +4,6 @@
     <string name="no_internet_available">No Internet Available</string>
     <string name="teachers">Teachers</string>
     <string name="favourite">Favourite</string>
+    <string name="saved_to_favorite_list">Saved to favorite list</string>
+    <string name="already_added">Already Added</string>
 </resources>

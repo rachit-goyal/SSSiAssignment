@@ -12,4 +12,5 @@ interface RepositoryInterface {
     suspend fun getData(): Resource<UserData>
     suspend fun insertUser(userLocalModel: UserLocalModel)
      fun getUsers(): Flow<List<UserLocalModel>>
+     suspend fun deleteUser(id:Int)
 }

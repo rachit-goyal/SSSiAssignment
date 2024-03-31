@@ -17,4 +17,8 @@ interface UserDao {
 
     @Query("select * from userdata order by Uid desc ")
     fun getAllUsers(): Flow<List<UserLocalModel>>
+
+    @Query("delete from userdata where Uid=:id")
+    suspend fun delete(id: Int)
+
 }
